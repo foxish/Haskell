@@ -42,6 +42,47 @@ m3 = [x*y |  x <- m1, y <- m2]
 v1 = ["dog", "cat", "bird", "mouse"]
 v2 = ["woof", "meow", "tweet", "squeak"]
 v3 = [ str1 ++ " goes " ++ str2 | (str1, str2) <- v1 `zip` v2 ]
+zipit = zip v1 v2
 
 ---no named parameter
 length' xs = sum [1 | _ <- xs]
+
+---list of lists
+mLevel = [[1,2,3,4,5],[5,6,7,8,9],[10,11,12,13,14]]
+mLevelOdd = [[ x | x <- xs, odd x] | xs <- mLevel]
+mLevelEven = [[ x | x <- xs, even x] | xs <- mLevel]
+
+---tuples
+tup1 = (1, 2)
+fst' = fst tup1
+snd' = snd tup1
+
+---zip
+zip1 = zip [1..] ['a'..'z']
+zip2 = zip [1..10] ['a'..]
+validTriangles = [(a,b,c) | a <- [1..10], b <- [1..10], c <- [1..10], (a + b) > c, a^2 + b^2 == c^2]
+
+--factorial
+factorial n = product [1..n]
+
+
+---read and write
+read1 = read "5" :: Int
+
+---Pattern matching
+patt1 10 = "hurr"
+patt1 x = if x < 5 then "hee" else "haw"
+
+factorial2 :: ( Integral a) => a -> a
+factorial2 0 = 1
+factorial2 n = n * factorial (n - 1)
+
+---typeclasses
+addVectors :: ( Num a) => (a, a) -> (a, a) -> (a, a)
+addVectors (x1,y1) (x2,y2) = (x1 + x2, y1 + y2)
+
+
+
+
+
+
