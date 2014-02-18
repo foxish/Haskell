@@ -81,8 +81,32 @@ factorial2 n = n * factorial (n - 1)
 addVectors :: ( Num a) => (a, a) -> (a, a) -> (a, a)
 addVectors (x1,y1) (x2,y2) = (x1 + x2, y1 + y2)
 
+---length (recursive)
+length'' :: (Num b) => [a] -> b
+length'' [] = 0
+length'' (_:xs) = 1 + length' xs
 
+---sum (recursive)
+sum'' :: (Num a) => [a] -> a
+sum'' [] = 0
+sum'' (x:xs) = x + sum xs
 
+---guards
+rating :: (RealFloat a) => a -> String
+rating rt
+	| cs <= 1.0 = "Aim higher son!"
+	| cs <= 5.0 = "Higher!"
+	| cs <= 9.0 = "Nice!"
+	| cs >= 10  = "Invalid"
+	| otherwise = "Probably out of your league..."
+	where cs = rt/1.50
+
+initials :: String -> String -> String
+initials firstname lastname = [f] ++ ". " ++ [l] ++ "."
+	where 
+	(f:_) = firstname
+	(l:_) = lastname
+	
 
 
 
