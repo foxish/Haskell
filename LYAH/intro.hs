@@ -107,6 +107,38 @@ initials firstname lastname = [f] ++ ". " ++ [l] ++ "."
 	(f:_) = firstname
 	(l:_) = lastname
 	
+---let it be
+getAverageSpeed :: (RealFloat a) => (a,a) -> a
+getAverageSpeed (x,y) = let 
+						dist = x
+						time = y
+						in dist/time
+						
+getAverageSpeeds :: (RealFloat a) => [(a,a)] -> [a]
+getAverageSpeeds xs = [speed | (dist, time) <- xs, let speed=dist/time]
+
+
+---maximum of list
+maximum' :: (Ord a) => [a] -> a
+maximum' [] = error "Empty list"
+maximum' [x] = x
+
+---This also works.
+---maximum' (x:xs) = if x > y then x else y
+---			  where y = maximum xs
+---Note: Can easily write using max (a,b) builtin
+
+maximum' (x:xs)
+	| x > maxsofar = x
+	| otherwise = maxsofar
+	where maxsofar = maximum' xs
+	
+---replicate' :: (Num a) => a -> a -> [a]
+replicate' :: (Num i, Ord i) => i -> a -> [a]
+replicate' n x
+	| n <= 0 = []
+	| otherwise = x: replicate' (n - 1) x
+	
 
 
 
