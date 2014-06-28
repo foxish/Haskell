@@ -1,6 +1,13 @@
+import Data.List (foldl')
 main = do
-    putStrLn ("Sum by filter/sum method = " ++ show (sum_even_filter [1,3,4,5,6]))
-    putStrLn ("Sum by foldl method = " ++ show (sum_even_fold [1,3,4,5,6]))
+    let lst = [1,3,4,5,6]
+    putStrLn ("Sum by filter/sum method = " ++ show (sum_even_filter lst))
+    putStrLn ("Sum by foldl method = " ++ show (sum_even_fold lst))
+    putStrLn ("Sum of even squares = " ++ show (sum_even_squares lst))
     
 sum_even_filter lst = sum$ filter even lst
-sum_even_fold lst = foldl (\x y -> x+y) 0 (filter even lst)
+sum_even_fold lst = foldl' (\x y -> x+y) 0 (filter even lst)
+-- could use (+) instead of (\x y -> x+y)
+
+-- sum of even squares
+sum_even_squares lst = sum(filter even (map (^2) lst))
