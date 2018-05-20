@@ -12,7 +12,7 @@ checkUserNum ans ubound chances = do
           putStrLn $ "Guess number between 0 and " ++ show ubound ++ " (" ++ show chances ++ " chances remaining)"
           guess <- (readLn :: IO Int)
           let res = (isCorrect ans guess)
-          putStrLn (fst res)
+          putStrLn res
           checkUserNum ans ubound (chances-1)
         else return False
 
@@ -29,8 +29,8 @@ main = do
         then putStrLn "You ran out of chances :("
         else return  ()
 
-isCorrect :: Int -> Int -> (String,Bool)
+isCorrect :: Int -> Int -> String
 isCorrect ans guess
-  | guess == ans =("Correct! " ++ show ans ++ " was the number.",True)
-  | guess < ans  = ("Wrong. Try Higher.",False)
-  | otherwise    = ("Wrong. Try Lower.",False)
+  | guess == ans = "Correct! " ++ show ans ++ " was the number."
+  | guess < ans  = "Wrong. Try Higher."
+  | otherwise    = "Wrong. Try Lower."
