@@ -20,11 +20,11 @@ main = do
     -- Select an upper bound
     putStrLn "Select upper bound"
     ubound <- readLn
-    rnd <- (ran ubound :: IO Int)
+    rnd <- ran ubound
     let chances = (+ 1) . truncate . log . fromIntegral$ ubound
     -- Loop through user input
 
-    result <- (checkUserNum rnd ubound chances :: IO Bool)
+    result <- checkUserNum rnd ubound chances
     if result /= True
         then putStrLn "You ran out of chances :("
         else return  ()
