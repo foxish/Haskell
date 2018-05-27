@@ -3,38 +3,34 @@ import System.Random
 ran :: Int -> IO Int
 ran x = do
     g <- getStdGen
-    let (a,g1) = randomR (0, x) g
+    let (a,_) = randomR (0, x) g
     return a
 
 checkUserNum :: Int -> Int -> Int -> IO Bool
 checkUserNum ans ubound chances = do
-        putStrLn $ "Guess number between 0 and " ++ show ubound ++ " (" ++ show chances ++ " chances remaining)"
-        guess <- (readLn :: IO Int)
-        let new_chances = (subtract 1) chances
-        if chances > 0
-            then if guess == ans 
-                then do
-                    putStrLn$ "Correct! " ++ show ans ++ " was the number."
-                    return True
-                else do
-                    if guess < ans 
-                        then putStrLn$ "Wrong. Try Higher."
-                        else putStrLn$ "Wrong. Try Lower."
-                    checkUserNum ans ubound new_chances
-            else do
-                return False
-            
-main = 
-    do
+        if (chances > 0) then do
+          putStrLn $ "Guess number between 0 and " ++ show ubound ++ " (" ++ show chances ++ " chances remaining)"
+          guess <- (readLn :: IO Int)
+          let res = (isCorrect ans guess)
+          putStrLn res
+          checkUserNum ans ubound (chances-1)
+        else return False
+
+main = do
     -- Select an upper bound
     putStrLn "Select upper bound"
     ubound <- readLn
-    rnd <- (ran ubound :: IO Int)
-    
+    rnd <- ran ubound
     let chances = (+ 1) . truncate . log . fromIntegral$ ubound
     -- Loop through user input
-    
-    result <- (checkUserNum rnd ubound chances :: IO Bool)
-    if result == True
-        then putStrLn "Correct!"
-        else putStrLn "You ran out of chances :("
+
+    result <- checkUserNum rnd ubound chances
+    if result /= True
+        then putStrLn "You ran out of chances :("
+        else return  ()
+
+isCorrect :: Int -> Int -> String
+isCorrect ans guess
+  | guess == ans = "Correct! " ++ show ans ++ " was the number."
+  | guess < ans  = "Wrong. Try Higher."
+  | otherwise    = "Wrong. Try Lower."
